@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>unity学习笔记 roll-a-ball | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="移动玩家移动
+首先获得键盘输入
+float moveHorizontal = Input.GetAxis(&amp;quot;Horizontal&amp;quot;);
+float moveVertival = Input.GetAxis(&amp;quot;Vertical&amp;quot;);
+ 通过GetAxis获得的Horizontal和Vertical都是来自unity的设置
+
+绑定刚体
+rb = GetComponent&amp;lt;Rigidbody&amp;gt;();
+
+让刚体移动
+Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertival);
+rb.AddForce(movement);
+公共变量
+
+script里面的公共变量会出现在Unity的Inspector里面">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="unity学习笔记 roll-a-ball">
+  <meta property="og:site_name" content="Hexo">
+
+  
+    <meta property="og:image" content>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-02-27T18:26:55.000Z"><a href="/2019/02/28/unity学习笔记-roll-a-ball/">2019-02-28</a></time>
+      
+      
+  
+    <h1 class="title">unity学习笔记 roll-a-ball</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="移动玩家"><a href="#移动玩家" class="headerlink" title="移动玩家"></a>移动玩家</h1><h2 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h2><ol>
+<li><p>首先获得键盘输入</p>
+<pre><code>float moveHorizontal = Input.GetAxis(&quot;Horizontal&quot;);
+float moveVertival = Input.GetAxis(&quot;Vertical&quot;);
+</code></pre><p> 通过<code>GetAxis</code>获得的<code>Horizontal</code>和<code>Vertical</code>都是来自unity的设置</p>
+</li>
+<li><p>绑定刚体</p>
+<pre><code>rb = GetComponent&lt;Rigidbody&gt;();
+</code></pre></li>
+<li><p>让刚体移动</p>
+<pre><code>Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertival);
+rb.AddForce(movement);
+</code></pre><h2 id="公共变量"><a href="#公共变量" class="headerlink" title="公共变量"></a>公共变量</h2></li>
+</ol>
+<p>script里面的公共变量会出现在Unity的Inspector里面<br><a id="more"></a></p>
+<h1 id="移动摄像机"><a href="#移动摄像机" class="headerlink" title="移动摄像机"></a>移动摄像机</h1><ol>
+<li>获取物品的位置<br><code>transform.posion</code><br>类型为vector3</li>
+<li><p>Update</p>
+<ol>
+<li><p><code>Update</code></p>
+<p> 跟平台帧数相关,用于非实体的更新</p>
+</li>
+<li><p><code>FixedUpdate</code></p>
+<ul>
+<li>是真实时间</li>
+<li>实体的更新必须用FixexUpdate</li>
+</ul>
+</li>
+<li><p><code>LateUpdate</code></p>
+<ul>
+<li>最后进行的update</li>
+<li>相机的update可以用在这里<h1 id="设置收集物"><a href="#设置收集物" class="headerlink" title="设置收集物"></a>设置收集物</h1><h2 id="deltaTime"><a href="#deltaTime" class="headerlink" title="deltaTime"></a>deltaTime</h2>距上一次调用<code>Update</code>或<code>FixedUpdate</code>所用的时间<br>使变化效果依赖于单位时间而不是帧间隔<h2 id="prefabs"><a href="#prefabs" class="headerlink" title="prefabs"></a>prefabs</h2>对预设资源进行的改变会运用到每一个实例上<h2 id="碰撞器"><a href="#碰撞器" class="headerlink" title="碰撞器"></a>碰撞器</h2></li>
+</ul>
+<p>void OnTriggerEnter(Collider other)<br>检测到碰撞事件的时候会调用它</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><code>Colider other</code>是被碰到的物体</p>
+<pre><code>other.gameObject.CompareTag()
+</code></pre><p>用来区分物体</p>
+<p>需要设置<code>Is Trigger</code>来保证可以穿过它</p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>静态碰撞器在运动时都会重新缓存<strong>所有</strong>静态碰撞器</p>
+<ul>
+<li>带有碰撞器和刚体的组件是动态的</li>
+<li>带有碰撞器但是没有物理刚体的是静态的<h3 id="刚体"><a href="#刚体" class="headerlink" title="刚体"></a>刚体</h3></li>
+<li><p>Use Gravity</p>
+<p>  不受重力影响但是会受其他物理力影响</p>
+</li>
+<li><p>is Kinematic</p>
+<p>  可以运动但是不会受物理力影响，所以可以作为事件的触发器</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/学习笔记/">学习笔记</a>, <a href="/tags/unity/">unity</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2019/02/28/unity学习笔记-roll-a-ball/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/unity/">unity</a><small>1</small></li>
+  
+    <li><a href="/tags/使用笔记/">使用笔记</a><small>1</small></li>
+  
+    <li><a href="/tags/学习笔记/">学习笔记</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2019 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
